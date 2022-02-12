@@ -22,20 +22,25 @@ class StoreButtonEventCommand(commands.Cog):
         price = get_price(store_btn)
         minus = player_coin - price
         plus = player_coin + price
-        if store_btn == 'atv_blue' and check_player == 1:
-            if price < player_coin:
-                await interaction.respond(content='ยอดเงินคุณเหลือเฟือ')
+        # if store_btn == 'atv_blue' and check_player == 1:
+        #     if price < player_coin:
+        #         await interaction.respond(content='ยอดเงินคุณเหลือเฟือ')
+        #     if newbie == 0:
+        #         await interaction.respond(content='คุณได้รับสิทธิ์ในการสั่งซื้อครั้งแรก')
+        #     await interaction.respond(content='ขออภัยยอดเงินในบัญชีของคุณไม่พอสำหรับชำระค่าบริการนี้')
 
-                # await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
+        #         # await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
 
-            await interaction.respond(content='player not found')
-            # package = get_command(store_btn)
-            # package_cmd = package.split(",")
-            # await interaction.respond(content=f'{member.name} click the button {store_btn}')
-            # for pack in package_cmd:
-            #     await interaction.channel.send(f'{pack}')
-            #     await asyncio.sleep(1)
+        #     await interaction.respond(content=f'player not found {price} {player_coin}')
+        #     # package = get_command(store_btn)
+        #     # package_cmd = package.split(",")
+        #     # await interaction.respond(content=f'{member.name} click the button {store_btn}')
+        #     # for pack in package_cmd:
+        #     #     await interaction.channel.send(f'{pack}')
+        #     #     await asyncio.sleep(1)
 
+        if store_btn == 'new_player' and check_player == 1:
+            await interaction.respond(content='คุณได้รับสิทธิ์ในการสั่งซื้อครั้งแรก')
 
 def setup(bot):
     bot.add_cog(StoreButtonEventCommand(bot))
