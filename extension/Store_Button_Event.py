@@ -39,7 +39,7 @@ class StoreButtonEventCommand(commands.Cog):
         #     #     await interaction.channel.send(f'{pack}')
         #     #     await asyncio.sleep(1)
 
-        if store_btn == 'new_player' and check_player == 1:
+        if new_player == 'new_player' and check_player == 1:
             await interaction.respond(content='คุณได้รับสิทธิ์ในการสั่งซื้อครั้งแรก')
 
 def setup(bot):
