@@ -35,13 +35,14 @@ class StoreButtonEventCommand(commands.Cog):
                 players_update_coin(member.id, newbie_pay)
                 players_newbie_update(member.id)
 
-            if price < player_coin:
+            if player_coin < price:
                 await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อครั้งนี้')
+
 
 
             # await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
 
-            # await interaction.respond(content=f'player not found {price} {player_coin}')
+            await interaction.respond(content=f'player not found {price} {player_coin}')
             # package = get_command(store_btn)
             # package_cmd = package.split(",")
             # await interaction.respond(content=f'{member.name} click the button {store_btn}')
