@@ -18,11 +18,9 @@ class StoreButtonEventCommand(commands.Cog):
             package = get_command('mk18_full_set')
             package_cmd = package.split(",")
             await interaction.respond(content=f'{member.name} click the button {store_btn}')
-            while True:
-                pack = []
-                if pack in package_cmd:
-                    await interaction.channel.send(f'{pack}')
-                    await asyncio.sleep(1)
+            for pack in package_cmd:
+                await interaction.channel.send(f'{pack}')
+                await asyncio.sleep(1)
 
 
 def setup(bot):
