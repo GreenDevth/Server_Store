@@ -29,7 +29,7 @@ class StoreButtonEventCommand(commands.Cog):
         if store_btn == 'atv_blue' and check_player == 1:
             if newbie == 0:
                 await interaction.respond(content=f'```รายการสั่งซื้อหมายเลข {order_number} '
-                                                  f'โปรดรอสัครู่ระบบกำลังตรวจสอบและจัดส่งไปให้คุณ')
+                                                  'โปรดรอสัครู่ระบบกำลังตรวจสอบและจัดส่งไปให้คุณ```')
                 add_to_cart(member.id, member.name, p[3], order_number, store_btn)
                 newbie_pay = player_coin - newbie_get_price(f'{store_btn}_newbie')
                 players_update_coin(member.id, newbie_pay)
