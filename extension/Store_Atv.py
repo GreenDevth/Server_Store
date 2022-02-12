@@ -14,7 +14,7 @@ class StoreAtvCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='atv_blue'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='atv_blue'),
                 ]
             ]
         )
@@ -23,7 +23,7 @@ class StoreAtvCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='atv_camo'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='atv_camo'),
                 ]
             ]
         )
@@ -32,7 +32,7 @@ class StoreAtvCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='atv_red'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='atv_red'),
                 ]
             ]
         )
@@ -42,7 +42,7 @@ class StoreAtvCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='atv_yellow'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='atv_yellow'),
                 ]
             ]
         )
