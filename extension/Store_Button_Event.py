@@ -1,5 +1,4 @@
-import asyncio
-
+import discord
 from discord.ext import commands
 from database.Store import *
 from database.Players import *
@@ -11,17 +10,25 @@ class StoreButtonEventCommand(commands.Cog):
 
     @commands.Cog.listener()
     async def on_button_click(self, interaction):
+        store_btn = interaction.component.custom_id
         member = interaction.author
         p = players(member.id)
-        store_btn = interaction.component.custom_id
-
-        if store_btn == 'atv_blue':
-            print(f'{member.name} clicked.')
-            check_player = players_exists(member.id)
-
+        player_coin = p[5]
+        player_level = p[6]
+        player_exp = p[8]
+        newbie = p[7]
+        check_player = players_exists(member.id)
+        pack = get_command(store_btn)
+        price = get_price(store_btn)
+        minus = player_coin - price
+        plus = player_coin + price
+        if store_btn == 'atv_blue' and check_player == 1:
             if check_player == 1:
-                print(type(p[5]))
-                await interaction.respond(content=f'{p[5]}')
+                if price < player_coin:
+                    await interaction.respond(content='ยอดเงินคุณเหลือเฟือ')
+
+                # await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
+
             await interaction.respond(content='player not found')
             # package = get_command(store_btn)
             # package_cmd = package.split(",")
