@@ -1,7 +1,8 @@
 import asyncio
 
 from discord.ext import commands
-from database.Store import get_command
+from database.Store import *
+from database.Players import *
 
 
 class StoreButtonEventCommand(commands.Cog):
@@ -15,12 +16,19 @@ class StoreButtonEventCommand(commands.Cog):
 
         if store_btn == 'atv_blue':
             print(f'{member.name} clicked.')
-            package = get_command(store_btn)
-            package_cmd = package.split(",")
-            await interaction.respond(content=f'{member.name} click the button {store_btn}')
-            for pack in package_cmd:
-                await interaction.channel.send(f'{pack}')
-                await asyncio.sleep(1)
+            check_player = players_exists(member.id)
+
+            if check_player == 1:
+                player = players(member.id)
+                print(player)
+                await interaction.respond(content=f'{player}')
+            await interaction.respond(content='player not found')
+            # package = get_command(store_btn)
+            # package_cmd = package.split(",")
+            # await interaction.respond(content=f'{member.name} click the button {store_btn}')
+            # for pack in package_cmd:
+            #     await interaction.channel.send(f'{pack}')
+            #     await asyncio.sleep(1)
 
 
 def setup(bot):
