@@ -22,7 +22,11 @@ class StoreButtonEventCommand(commands.Cog):
         price = get_price(store_btn)
         minus = player_coin - price
         plus = player_coin + price
-        if store_btn == 'atv_blue' and check_player == 1:
+        newbie_pack = newbie_get_command(store_btn)
+        newbie_price = newbie_get_price(store_btn)
+        newbie_minus = player_coin - newbie_price
+        newbie_plus = player_coin + newbie_price
+        if store_btn == 'atv_blue' or store_btn == 'atv_blue_newbie' and check_player == 1:
             if price < player_coin:
                 await interaction.respond(content='ยอดเงินคุณเหลือเฟือ')
             if newbie == 0:
@@ -38,7 +42,7 @@ class StoreButtonEventCommand(commands.Cog):
             # for pack in package_cmd:
             #     await interaction.channel.send(f'{pack}')
             #     await asyncio.sleep(1)
-            await interaction.respond(content='คุณได้รับสิทธิ์ในการสั่งซื้อครั้งแรก')
+            # await interaction.respond(content='คุณได้รับสิทธิ์ในการสั่งซื้อครั้งแรก')
 
 
 def setup(bot):

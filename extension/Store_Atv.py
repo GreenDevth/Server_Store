@@ -12,26 +12,39 @@ class StoreAtvCommand(commands.Cog):
         await ctx.send(
             file=discord.File('./img/atv/blue.png'),
             components=[
-                Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='atv_blue')
+                [
+                    Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='atv_blue'),
+                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='atv_blue_newbie')
+                ]
             ]
         )
         await ctx.send(
             file=discord.File('./img/atv/camo.png'),
             components=[
-                Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='atv_camo')
+                [
+                    Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='atv_camo'),
+                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='atv_camo_newbie')
+                ]
             ]
         )
         await ctx.send(
             file=discord.File('./img/atv/red.png'),
             components=[
-                Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='atv_red')
+                [
+                    Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='atv_red'),
+                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='atv_red_newbie')
+                ]
             ]
         )
 
         await ctx.send(
             file=discord.File('./img/atv/yellow.png'),
             components=[
-                Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='atv_yellow')
+                [
+                    Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='atv_yellow'),
+                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK',
+                           emoji='🏷', custom_id='atv_yellow_newbie')
+                ]
             ]
         )
 
