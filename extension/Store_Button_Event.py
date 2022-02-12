@@ -15,7 +15,7 @@ class StoreButtonEventCommand(commands.Cog):
 
         if store_btn == 'atv_blue':
             print(f'{member.name} clicked.')
-            package = get_command('mk18_full_set')
+            package = get_command(store_btn)
             package_cmd = package.split(",")
             await interaction.respond(content=f'{member.name} click the button {store_btn}')
             for pack in package_cmd:
