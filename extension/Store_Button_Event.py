@@ -41,7 +41,7 @@ class StoreButtonEventCommand(commands.Cog):
 
             # await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
 
-            await interaction.respond(content=f'player not found {price} {player_coin}')
+            # await interaction.respond(content=f'player not found {price} {player_coin}')
             # package = get_command(store_btn)
             # package_cmd = package.split(",")
             # await interaction.respond(content=f'{member.name} click the button {store_btn}')
