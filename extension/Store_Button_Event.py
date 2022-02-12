@@ -12,6 +12,7 @@ class StoreButtonEventCommand(commands.Cog):
     @commands.Cog.listener()
     async def on_button_click(self, interaction):
         member = interaction.author
+        p = players(member.id)
         store_btn = interaction.component.custom_id
 
         if store_btn == 'atv_blue':
@@ -19,11 +20,8 @@ class StoreButtonEventCommand(commands.Cog):
             check_player = players_exists(member.id)
 
             if check_player == 1:
-                player = players(member.id)
-                player_coin = player[5]
-                player_exp = player[6]
-                player_lelvel = player[7]
-                await interaction.respond(content=f'{player_coin}')
+                print(type(p[5]))
+                await interaction.respond(content=f'{p[5]}')
             await interaction.respond(content='player not found')
             # package = get_command(store_btn)
             # package_cmd = package.split(",")
