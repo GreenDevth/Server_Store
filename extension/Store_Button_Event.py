@@ -28,13 +28,15 @@ class StoreButtonEventCommand(commands.Cog):
 
         if store_btn == 'atv_blue' and check_player == 1:
             if newbie == 0:
-                await interaction.respond(content=f'```รายการสั่งซื้อหมายเลข {order_number} '
-                                                  'โปรดรอสัครู่ระบบกำลังตรวจสอบและจัดส่งไปให้คุณ```')
+                await interaction.respond(content=f'ยินดีด้วยคุณได้ซื้อสินค้าในราคาพิเศษ {order_number} '
+                                                  'กำลังเตรียมการจัดส่งไปยังตัวผู้เล่นในเกมส์')
                 add_to_cart(member.id, member.name, p[3], order_number, store_btn)
                 newbie_pay = player_coin - newbie_get_price(f'{store_btn}_newbie')
                 players_update_coin(member.id, newbie_pay)
                 players_newbie_update(member.id)
-            await interaction.respond(content='คุณใช้สิทธิ์ในการซื้อครั้งแรกไปแล้ว')
+
+            if price < player_coin:
+                await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อครั้งนี้')
 
 
             # await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
