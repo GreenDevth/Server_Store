@@ -13,6 +13,6 @@ def get_command(package_name):
         row = cur.fetchone()
         while row is not None:
             res = list(row)
-            return res
+            return res[0]
     except Error as e:
         print(e)
