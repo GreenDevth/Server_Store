@@ -3,6 +3,7 @@ import random
 from discord.ext import commands
 from database.Store import *
 from database.Players import *
+from datetime import datetime
 
 
 class StoreButtonEventCommand(commands.Cog):
@@ -25,7 +26,12 @@ class StoreButtonEventCommand(commands.Cog):
         plus = player_coin + price
         code = random.randint(9, 999999)
         order_number = f'order{code}'
-
+        # current dateTime
+        now = datetime.now()
+        time = now.strftime("%H:%M:%S")
+        print('Time String:', time)
+        if time != "18:00:00":
+            await interaction.respond(content='ok')
         if store_btn == 'atv_blue' and check_player == 1:
             if newbie == 0:
                 await interaction.respond(content=f'ยินดีด้วยคุณได้ซื้อสินค้าในราคาพิเศษ {order_number} '
