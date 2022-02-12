@@ -20,8 +20,10 @@ class StoreButtonEventCommand(commands.Cog):
 
             if check_player == 1:
                 player = players(member.id)
-                print(player)
-                await interaction.respond(content=f'{player}')
+                player_coin = player[5]
+                player_exp = player[6]
+                player_lelvel = player[7]
+                await interaction.respond(content=f'{player_coin}')
             await interaction.respond(content='player not found')
             # package = get_command(store_btn)
             # package_cmd = package.split(",")
