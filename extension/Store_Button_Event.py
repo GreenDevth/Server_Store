@@ -1,4 +1,5 @@
 import discord
+import random
 from discord.ext import commands
 from database.Store import *
 from database.Players import *
@@ -22,11 +23,19 @@ class StoreButtonEventCommand(commands.Cog):
         price = get_price(store_btn)
         minus = player_coin - price
         plus = player_coin + price
+        code = random.randint(9, 999999)
+        order_number = f'order{code}'
 
         if store_btn == 'atv_blue' and check_player == 1:
             if newbie == 0:
+                await interaction.respond(content=f'```รายการสั่งซื้อหมายเลข {order_number} '
+                                                  f'โปรดรอสัครู่ระบบกำลังตรวจสอบและจัดส่งไปให้คุณ')
+                add_to_cart(member.id, member.name, p[3], order_number, store_btn)
                 newbie_pay = player_coin - newbie_get_price(f'{store_btn}_newbie')
-                await interaction.respond(content=f'{newbie_pay}')
+                players_update_coin(member.id, newbie_pay)
+                players_newbie_update(member.id)
+            await interaction.respond(content='คุณใช้สิทธิ์ในการซื้อครั้งแรกไปแล้ว')
+
 
             # await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
 

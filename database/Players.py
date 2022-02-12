@@ -30,3 +30,29 @@ def players(discord_id):
                 return x
     except Error as e:
         print(e)
+
+
+def players_update_coin(discord_id, coin):
+    conn = None
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        sql = 'UPDATE scum_players SET COINS = %s WHERE DISCORD_ID = %s'
+        cur.execute(sql, (coin, discord_id,))
+        conn.commit()
+        cur.close()
+    except Error as e:
+        print(e)
+
+
+def players_newbie_update(discord_id):
+    conn = None
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        sql = 'UPDATE scum_players SET NEWBIE = 1 WHERE DISCORD_ID = %s'
+        cur.execute(sql, (discord_id,))
+        conn.commit()
+        cur.close()
+    except Error as e:
+        print(e)
