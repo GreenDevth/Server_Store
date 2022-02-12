@@ -29,15 +29,9 @@ class StoreButtonEventCommand(commands.Cog):
         # current dateTime
         now = datetime.now()
         time = now.strftime("%H:%M:%S")
-        print('Time String:', time)
-        # Get current time
-        x_time = datetime.now().time()
-        print('Current Time:', x_time)
-
-        print("Time in 24 hours format:", x_time.strftime("%H-%M-%S"))
-        print("Time in 12 hours format:", x_time.strftime("%I-%M-%S"))
-        if time != "18:00:00":
-            await interaction.respond(content='ok')
+        if time < "18:00:00":
+            await interaction.respond(content='คุณอยู่นอกเวลาทำการของบอท กรุณารอ บอททำการประมาณ 18:20 - 24: 00 '
+                                              'ของทุกวัน')
         if store_btn == 'atv_blue' and check_player == 1:
             if newbie == 0:
                 await interaction.respond(content=f'ยินดีด้วยคุณได้ซื้อสินค้าในราคาพิเศษ {order_number} '
