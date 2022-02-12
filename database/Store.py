@@ -31,3 +31,30 @@ def get_price(package_name):
     except Error as e:
         print(e)
 
+
+def newbie_get_command(package_name):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        sql = 'SELECT package_data FROM scum_newbie_pack WHERE package_name = %s'
+        cur.execute(sql, (package_name,))
+        row = cur.fetchone()
+        while row is not None:
+            res = list(row)
+            return res[0]
+    except Error as e:
+        print(e)
+
+
+def newbie_get_price(package_name):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        sql = 'SELECT package_price FROM scum_newbie_pack WHERE package_name = %s'
+        cur.execute(sql, (package_name,))
+        row = cur.fetchone()
+        while row is not None:
+            res = list(row)
+            return res[0]
+    except Error as e:
+        print(e)
