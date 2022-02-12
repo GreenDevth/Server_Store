@@ -23,9 +23,8 @@ class StoreButtonEventCommand(commands.Cog):
         minus = player_coin - price
         plus = player_coin + price
         if store_btn == 'atv_blue' and check_player == 1:
-            if check_player == 1:
-                if price < player_coin:
-                    await interaction.respond(content='ยอดเงินคุณเหลือเฟือ')
+            if price < player_coin:
+                await interaction.respond(content='ยอดเงินคุณเหลือเฟือ')
 
                 # await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
 
