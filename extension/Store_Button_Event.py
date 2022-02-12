@@ -29,6 +29,7 @@ class StoreButtonEventCommand(commands.Cog):
         # current dateTime
         now = datetime.now()
         time = now.strftime("%H:%M:%S")
+        print(now)
         if time < "18:00:00":
             await interaction.respond(content='คุณอยู่นอกเวลาทำการของบอท กรุณารอ บอททำการประมาณ 18:20 - 24: 00 '
                                               'ของทุกวัน')
