@@ -32,10 +32,9 @@ class StoreButtonEventCommand(commands.Cog):
         print(time)
         shop_open = "18:00:00"
         if time < shop_open:
-            await interaction.respond(content='คุณอยู่นอกเวลาทำการของบอท กรุณารอ บอททำการประมาณ 18:20 - 24: 00 '
-                                              'ของทุกวัน')
-        if shop_open < time:
-            await interaction.respond(content='BOT SHOP IS OPEN')
+            await interaction.respond(
+                content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
+                        'ขออภัยในความไม่สะดวก')
         if store_btn == 'atv_blue' and check_player == 1:
             if newbie == 0:
                 await interaction.respond(content=f'ยินดีด้วยคุณได้ซื้อสินค้าในราคาพิเศษ {order_number} '
@@ -48,8 +47,6 @@ class StoreButtonEventCommand(commands.Cog):
             if player_coin < price:
                 await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อครั้งนี้')
 
-
-
             # await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
 
             await interaction.respond(content=f'player not found {price} {player_coin}')
@@ -60,7 +57,6 @@ class StoreButtonEventCommand(commands.Cog):
             #     await interaction.channel.send(f'{pack}')
             #     await asyncio.sleep(1)
             # await interaction.respond(content='คุณได้รับสิทธิ์ในการสั่งซื้อครั้งแรก')
-
 
 
 def setup(bot):
