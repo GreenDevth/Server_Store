@@ -31,11 +31,11 @@ class StoreButtonEventCommand(commands.Cog):
         time = now.strftime("%H:%M:%S")
         print(time)
         shop_open = "18:00:00"
-        if shop_open < time:
+        if time < shop_open:
             await interaction.respond(content='คุณอยู่นอกเวลาทำการของบอท กรุณารอ บอททำการประมาณ 18:20 - 24: 00 '
                                               'ของทุกวัน')
-        if time < shop_open:
-            await interaction.respond(content='time < shop open')
+        if shop_open < time:
+            await interaction.respond(content='BOT SHOP IS OPEN')
         if store_btn == 'atv_blue' and check_player == 1:
             if newbie == 0:
                 await interaction.respond(content=f'ยินดีด้วยคุณได้ซื้อสินค้าในราคาพิเศษ {order_number} '
