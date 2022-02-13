@@ -50,11 +50,11 @@ class ServerStore(commands.Cog):
                 check = daily_status(member.id)
                 if shop_open < time:
                     if check == 0:
+                        await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
                         add_to_cart(member.id, member.name, player[3], order_number, server_btn)
                         queue = check_queue()
                         order = in_order(member.id)
                         update_daily_pack(member.id)
-                        await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
                         await cmd_channel.send(
                             f'{member.mention} '
                             f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
