@@ -1,9 +1,28 @@
 import random
+from datetime import datetime
 from discord.ext import commands
 from database.Store import shop_is_open, get_price, newbie_get_price, add_to_cart, check_queue, in_order
 from database.Players import players_exists, players, players_update_coin, players_newbie_update
 
 shop = shop_is_open("18:00:00")
+
+
+def who_click(member_name, member_id, button):
+    # Open the file in append & read mode ('a+')
+    with open("./txt/who_click.txt", "a+") as file_object:
+        # Move read cursor to the start of file.
+        file_object.seek(0)
+        # If file is not empty then append '\n'
+        data = file_object.read(100)
+        if len(data) > 0:
+            file_object.write("\n")
+        # Append text at the end of file
+        now = datetime.now()
+        date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+        name = str(member_name)
+        discord_id = str(f"Discord ID: {member_id}")
+        msg = f"{date_time} {discord_id} {name}"
+        file_object.write("{}".format(msg.strip()))
 
 
 class StoreButtonEventCommand(commands.Cog):
@@ -23,6 +42,7 @@ class StoreButtonEventCommand(commands.Cog):
         code = random.randint(9, 999999)
         order_number = f'order{code}'
         print(f'{member.name} clicked.')
+        who_click(member.name, member.id, store_btn)
         if shop == 'Close':
             print('Shop is closed.')
             await interaction.respond(
@@ -648,7 +668,7 @@ class StoreButtonEventCommand(commands.Cog):
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -684,7 +704,7 @@ class StoreButtonEventCommand(commands.Cog):
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -720,7 +740,7 @@ class StoreButtonEventCommand(commands.Cog):
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -756,7 +776,7 @@ class StoreButtonEventCommand(commands.Cog):
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -792,7 +812,7 @@ class StoreButtonEventCommand(commands.Cog):
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -832,7 +852,7 @@ class StoreButtonEventCommand(commands.Cog):
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -868,7 +888,7 @@ class StoreButtonEventCommand(commands.Cog):
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -904,7 +924,7 @@ class StoreButtonEventCommand(commands.Cog):
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -940,7 +960,7 @@ class StoreButtonEventCommand(commands.Cog):
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -976,7 +996,7 @@ class StoreButtonEventCommand(commands.Cog):
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -1012,7 +1032,7 @@ class StoreButtonEventCommand(commands.Cog):
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -1048,7 +1068,7 @@ class StoreButtonEventCommand(commands.Cog):
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
