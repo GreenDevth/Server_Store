@@ -8,9 +8,11 @@ from discord_components import Button, ButtonStyle
 from database.battlemetric import battlemetric
 from database.Players import players, daily_status, update_daily_pack
 from database.Store import *
+from config.auth import get_token
 
-token = str(battlemetric(2))
-url = str(battlemetric(3))
+token = get_token(2)
+url = get_token(3)
+
 auth = f"{token}"
 head = {'Authorization': 'Brarer' + auth}
 
