@@ -28,14 +28,16 @@ class ServerStore(commands.Cog):
         shop_open = "18:00:00"
 
         if server_btn == 'bankstatement':
-            await interaction.respond(content=f'Your register status is {check_player}')
-            # player = players(member.id)
-            # coin = "${:,d}".format(player[5])
-            # await interaction.respond(
-            #     content=f"Name : '{player[1]}' "
-            #             f"\nBank ID : {player[4]} "
-            #             f"\nTotal : {coin}"
-            # )
+            if check_player == 0:
+                await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
+            else:
+                player = players(member.id)
+                coin = "${:,d}".format(player[5])
+                await interaction.respond(
+                    content=f"Name : '{player[1]}' "
+                            f"\nBank ID : {player[4]} "
+                            f"\nTotal : {coin}"
+                )
 
         if server_btn == 'dailypack':
             cmd_channel = self.bot.get_channel(925559937323659274)
