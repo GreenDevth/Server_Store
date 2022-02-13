@@ -5,7 +5,6 @@ import random
 from datetime import datetime
 from discord.ext import commands
 from discord_components import Button, ButtonStyle
-from database.battlemetric import battlemetric
 from database.Players import players, daily_status, update_daily_pack
 from database.Store import *
 from config.auth import get_token
