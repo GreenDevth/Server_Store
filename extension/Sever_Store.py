@@ -38,7 +38,9 @@ class ServerStore(commands.Cog):
 
         if server_btn == 'bankstatement':
             await interaction.respond(
-                content=f"```css\nName : '{player[1]}' , Bank ID : {player[4]}, Total : {coin}\n```"
+                content=f"Name : '{player[1]}' "
+                        f"\nBank ID : {player[4]} "
+                        f"\nTotal : {coin}"
             )
 
         if server_btn == 'dailypack':
@@ -46,15 +48,14 @@ class ServerStore(commands.Cog):
 
         if server_btn == 'server':
             await interaction.respond(
-                content=f"```\nServer: {scum_server}" +
-                        f"\nIP: {scum_ip}:{scum_port}" +
-                        f"\nStatus: {scum_status}" +
-                        f"\nTime in Game: {scum_time}" +
-                        f"\nPlayers: {scum_player}/{scum_player_max}" +
-                        f"\nRanking: #{scum_rank}" +
-                        f"\nGame version: {scum_version}\n" +
-                        f"\nServer Restarts Every 6 hours" +
-                        f"\nVehicle 3 days of inactivity will be destroyed" +
+                content=f"```\nServer: {scum_server} "
+                        f"\nIP: {scum_ip}:{scum_port} "
+                        f"\nStatus: {scum_status} "
+                        f"\nTime in Game: {scum_time} "
+                        f"\nPlayers: {scum_player}/{scum_player_max} "
+                        f"\nRanking: #{scum_rank} "
+                        f"\nGame version: {scum_version}\n "
+                        f"\nServer Restarts Every 6 hours "
                         f"\nDay 3.8 hours, Night 1 hours\n```",
             )
 
@@ -76,7 +77,7 @@ class ServerStore(commands.Cog):
     @commands.command(name='selfserve')
     async def selfserve_command(self, ctx):
         await ctx.send(
-            file=discord.File('./img/line.png'),
+            "ปุ่มจัดการธุรกรรมด้วยตนเอง",
             components=[
                 [
                     Button(style=ButtonStyle.gray, label='Bank Statement', emoji='🏦', custom_id='bankstatement'),
