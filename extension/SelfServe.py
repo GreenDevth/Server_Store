@@ -1,8 +1,6 @@
-import discord
 import requests
 import json
 import random
-from datetime import datetime
 from discord.ext import commands
 from discord_components import Button, ButtonStyle
 from database.Players import players, daily_status, update_daily_pack, players_exists
@@ -24,42 +22,50 @@ class ServerStore(commands.Cog):
     async def on_button_click(self, interaction):
         member = interaction.author
         server_btn = interaction.component.custom_id
-        check_player = players_exists(member.id)
+
         shop_open = "18:00:00"
 
         if server_btn == 'bankstatement':
-            player = players(member.id)
-            coin = "${:,d}".format(player[5])
-            await interaction.respond(
-                content=f"Name : '{player[1]}' "
-                        f"\nBank ID : {player[4]} "
-                        f"\nTotal : {coin}"
-            )
+            check_player = players_exists(member.id)
+            if check_player is not None:
+                player = players(member.id)
+                coin = "${:,d}".format(player[5])
+                await interaction.respond(
+                    content=f"Name : '{player[1]}' "
+                            f"\nBank ID : {player[4]} "
+                            f"\nTotal : {coin}"
+                )
+            else:
+                await interaction.respond(content='player not found.')
 
         if server_btn == 'dailypack':
-            cmd_channel = self.bot.get_channel(925559937323659274)
-            run_cmd_channel = self.bot.get_channel(927796274676260944)
-            player = players(member.id)
-            code = random.randint(9, 999999)
-            order_number = f'order{code}'
-            time = shop_is_open(shop_open)
-            if time < shop_open:
-                await interaction.respond(
-                    content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
-                            'ขออภัยในความไม่สะดวก')
-            check = daily_status(member.id)
-            if shop_open < time and check == 0:
-                add_to_cart(member.id, member.name, player[3], order_number, server_btn)
-                queue = check_queue()
-                order = in_order(member.id)
-                update_daily_pack(member.id)
-                await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
-                await cmd_channel.send(
-                    f'{member.mention} '
-                    f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
-                )
-                await run_cmd_channel.send('!checkout {}'.format(order_number))
-            await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว ')
+            check_player = players_exists(member.id)
+            if check_player is not None:
+                cmd_channel = self.bot.get_channel(925559937323659274)
+                run_cmd_channel = self.bot.get_channel(927796274676260944)
+                player = players(member.id)
+                code = random.randint(9, 999999)
+                order_number = f'order{code}'
+                time = shop_is_open(shop_open)
+                if time < shop_open:
+                    await interaction.respond(
+                        content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
+                                'ขออภัยในความไม่สะดวก')
+                check = daily_status(member.id)
+                if shop_open < time and check == 0:
+                    add_to_cart(member.id, member.name, player[3], order_number, server_btn)
+                    queue = check_queue()
+                    order = in_order(member.id)
+                    update_daily_pack(member.id)
+                    await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
+                    await cmd_channel.send(
+                        f'{member.mention} '
+                        f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
+                    )
+                    await run_cmd_channel.send('!checkout {}'.format(order_number))
+                await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว ')
+            else:
+                await interaction.respond(content='player not found.')
         if server_btn == 'server':
             response = requests.get("https://api.battlemetrics.com/servers/13458708", headers=head)
             res_text = response.text
@@ -87,23 +93,27 @@ class ServerStore(commands.Cog):
             )
 
         if server_btn == 'status':
-            player = players(member.id)
-            coin = "${:,d}".format(player[5])
+            check_player = players_exists(member.id)
+            if check_player is not None:
+                player = players(member.id)
+                coin = "${:,d}".format(player[5])
 
-            def newbie_status():
-                if player[7] == 1:
-                    return 'Already used.'
-                if player[7] == 0:
-                    return 'Has been used.'
+                def newbie_status():
+                    if player[7] == 1:
+                        return 'Already used.'
+                    if player[7] == 0:
+                        return 'Has been used.'
 
-            await interaction.respond(
-                content=f'Discord Name : {player[1]} '
-                        f'\nBank ID : {player[4]} '
-                        f'\nCoins : {coin} '
-                        f'\nExp : {player[8]} '
-                        f'\nLevel : {player[6]} '
-                        f'\nVehicle Specail Price : {newbie_status()}'
-            )
+                await interaction.respond(
+                    content=f'Discord Name : {player[1]} '
+                            f'\nBank ID : {player[4]} '
+                            f'\nCoins : {coin} '
+                            f'\nExp : {player[8]} '
+                            f'\nLevel : {player[6]} '
+                            f'\nVehicle Specail Price : {newbie_status()}'
+                )
+            else:
+                await interaction.respond(content='player not found.')
 
     @commands.command(name='selfserve')
     async def selfserve_command(self, ctx):
