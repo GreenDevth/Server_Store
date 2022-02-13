@@ -1,5 +1,6 @@
 from mysql.connector import MySQLConnection, Error
 from database.db_config import read_db_config
+from datetime import datetime
 
 db = read_db_config()
 
@@ -124,3 +125,13 @@ def newbie_get_price(package_name):
             return res[0]
     except Error as e:
         print(e)
+
+
+def shop_is_open():
+    now = datetime.now()
+    time = now.strftime("%H:%M:%S")
+    shop_open = "18:00:00"
+    if time < shop_open:
+        return 'Close'
+    else:
+        return 'Open'
