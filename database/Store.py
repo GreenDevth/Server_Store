@@ -127,10 +127,10 @@ def newbie_get_price(package_name):
         print(e)
 
 
-def shop_is_open():
+def shop_is_open(open_time):
     now = datetime.now()
     time = now.strftime("%H:%M:%S")
-    shop_open = "18:00:00"
+    shop_open = open_time
     if time < shop_open:
         return 'Close'
     else:

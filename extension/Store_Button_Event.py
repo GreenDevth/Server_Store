@@ -8,7 +8,7 @@ from database.Bank import cash
 code = random.randint(9, 999999)
 order_number = f'order{code}'
 
-shop = shop_is_open()
+shop = shop_is_open("12:00:00")
 
 class StoreButtonEventCommand(commands.Cog):
     def __init__(self, bot):
