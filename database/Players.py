@@ -65,7 +65,7 @@ def daily_status(discord_id):
         cur = conn.cursor()
         sql = 'SELECT DAILY_PACK FROM scum_players WHERE DISCORD_ID=%s'
         cur.execute(sql, (discord_id,))
-        row = cur.fetchall()
+        row = cur.fetchone()
         while row is not None:
             res = list(row)
             return res[0]
