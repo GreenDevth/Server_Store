@@ -21,7 +21,7 @@ class StoreButtonEventCommand(commands.Cog):
         store_btn = interaction.component.custom_id
         member = interaction.author
         check_player = players_exists(member.id)
-        player = players(member.id)
+
         price = get_price(store_btn)
         if shop == 'Close':
             print('Shop is closed.')
@@ -32,6 +32,7 @@ class StoreButtonEventCommand(commands.Cog):
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
             else:
+                player = players(member.id)
                 if player[7] == 0:
                     await interaction.respond(content='คุณได้รับสิทธิ์ในการสั่งซื้อรถในราคาผู้เล่นใหม่')
                 else:
