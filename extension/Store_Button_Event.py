@@ -43,6 +43,7 @@ class StoreButtonEventCommand(commands.Cog):
         order_number = f'order{code}'
         print(f'{member.name} clicked.')
         who_click(member.name, member.id, store_btn)
+        await cmd_channel.send(f'{member.name} is click {store_btn}')
         if shop == 'Close':
             print('Shop is closed.')
             await interaction.respond(
