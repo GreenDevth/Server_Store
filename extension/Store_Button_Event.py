@@ -2,7 +2,7 @@ import discord
 import random
 from discord.ext import commands
 from database.Store import *
-from database.Players import *
+from database.Players import players_exists, players
 from database.Bank import cash
 
 code = random.randint(9, 999999)
