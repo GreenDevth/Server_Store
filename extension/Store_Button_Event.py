@@ -16,27 +16,32 @@ class StoreButtonEventCommand(commands.Cog):
 
     @commands.Cog.listener()
     async def on_button_click(self, interaction):
-        cmd_channel = self.bot.get_channel(925559937323659274)
-        run_cmd_channel = self.bot.get_channel(927796274676260944)
         store_btn = interaction.component.custom_id
         member = interaction.author
-        p = players(member.id)
-        player_coin = p[5]
-        player_level = p[6]
-        player_exp = p[8]
-        newbie = p[7]
-        check_player = players_exists(member.id)
-        pack = get_command(store_btn)
-        price = get_price(store_btn)
-        minus = player_coin - price
-        if shop == 'Close':
-            print('Shop is closed.')
-            await interaction.respond(
-                    content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
-                            'ขออภัยในความไม่สะดวก')
-            return
+
         if store_btn == 'atv_blue':
-            await interaction.respond(content=f'{member.name} clicked.')
+            await interaction.respond(content=f'{member.name} is clicked.')
+        # cmd_channel = self.bot.get_channel(925559937323659274)
+        # run_cmd_channel = self.bot.get_channel(927796274676260944)
+        # store_btn = interaction.component.custom_id
+        # member = interaction.author
+        # p = players(member.id)
+        # player_coin = p[5]
+        # player_level = p[6]
+        # player_exp = p[8]
+        # newbie = p[7]
+        # check_player = players_exists(member.id)
+        # pack = get_command(store_btn)
+        # price = get_price(store_btn)
+        # minus = player_coin - price
+        # if shop == 'Close':
+        #     print('Shop is closed.')
+        #     await interaction.respond(
+        #             content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
+        #                     'ขออภัยในความไม่สะดวก')
+        #     return
+        # if store_btn == 'atv_blue':
+        #     await interaction.respond(content=f'{member.name} clicked.')
             # if price < player_coin:
             #     await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
             #     checkout_order = cash(member.id, price)
