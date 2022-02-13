@@ -22,6 +22,7 @@ class StoreButtonEventCommand(commands.Cog):
         newbie_price = newbie_get_price(f'{store_btn}_newbie')
         code = random.randint(9, 999999)
         order_number = f'order{code}'
+        print(f'{member.name} clicked.')
         if shop == 'Close':
             print('Shop is closed.')
             await interaction.respond(
