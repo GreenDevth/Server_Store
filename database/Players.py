@@ -8,7 +8,7 @@ def players_exists(discord_id):
     try:
         conn = MySQLConnection(**db)
         cur = conn.cursor()
-        sql = 'SELECT COUNT(*) FROM scum_players WHERE DISCORD_ID = %s'
+        sql = 'SELECT COUNT(STEAM_ID) FROM scum_players WHERE DISCORD_ID = %s'
         cur.execute(sql, (discord_id,))
         row = cur.fetchone()
         while row is not None:
