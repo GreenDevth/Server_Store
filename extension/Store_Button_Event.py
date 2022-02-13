@@ -30,6 +30,7 @@ class StoreButtonEventCommand(commands.Cog):
         price = get_price(store_btn)
         minus = player_coin - price
         if shop == 'Close':
+            print('Shop is closed.')
             await interaction.respond(
                     content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
                             'ขออภัยในความไม่สะดวก')
