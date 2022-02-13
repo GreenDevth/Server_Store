@@ -4,7 +4,7 @@ from discord.ext import commands
 from database.Store import *
 from database.Players import *
 from datetime import datetime
-
+from database.Bank import cash
 
 class StoreButtonEventCommand(commands.Cog):
     def __init__(self, bot):
@@ -12,6 +12,8 @@ class StoreButtonEventCommand(commands.Cog):
 
     @commands.Cog.listener()
     async def on_button_click(self, interaction):
+        cmd_channel = self.bot.get_channel(925559937323659274)
+        run_cmd_channel = self.bot.get_channel(927796274676260944)
         store_btn = interaction.component.custom_id
         member = interaction.author
         p = players(member.id)
@@ -39,24 +41,30 @@ class StoreButtonEventCommand(commands.Cog):
             if newbie == 0:
                 await interaction.respond(content=f'ยินดีด้วยคุณได้ซื้อสินค้าในราคาพิเศษ {order_number} '
                                                   'กำลังเตรียมการจัดส่งไปยังตัวผู้เล่นในเกมส์')
-                # add_to_cart(member.id, member.name, p[3], order_number, store_btn)
-                # newbie_pay = player_coin - newbie_get_price(f'{store_btn}_newbie')
-                # players_update_coin(member.id, newbie_pay)
+                add_to_cart(member.id, member.name, p[3], order_number, store_btn)
+                newbie_pay = player_coin - newbie_get_price(f'{store_btn}_newbie')
+                players_update_coin(member.id, newbie_pay)
                 players_newbie_update(member.id)
 
             if player_coin < price:
                 await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อครั้งนี้')
+            if price < player_coin:
+                await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
+                checkout_order = cash(member.id, price)
+                if checkout_order == 1:
+                    add_to_cart(member.id, member.name, p[3], order_number, store_btn)
+                    queue = check_queue()
+                    order = in_order(member.id)
+                    await interaction.send(f"คำสั่งหมายเลข {order_number} {store_btn} กำลังดำเนินการจัดส่งให้คุณ")
+                    await cmd_channel.send(
+                        f'{member.mention} '
+                        f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
+                    )
 
-            # await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
+                    await run_cmd_channel.send('!checkout {}'.format(order_number))
 
             await interaction.respond(content='Continue for PURCHASE a cars')
-            # package = get_command(store_btn)
-            # package_cmd = package.split(",")
-            # await interaction.respond(content=f'{member.name} click the button {store_btn}')
-            # for pack in package_cmd:
-            #     await interaction.channel.send(f'{pack}')
-            #     await asyncio.sleep(1)
-            # await interaction.respond(content='คุณได้รับสิทธิ์ในการสั่งซื้อครั้งแรก')
+
 
 
 def setup(bot):
