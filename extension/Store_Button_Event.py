@@ -7,7 +7,7 @@ from database.Players import players_exists, players, players_update_coin, playe
 shop = shop_is_open("18:00:00")
 
 
-def who_click(member_name, member_id, button):
+def who_click(member_name, member_id, click_btn):
     # Open the file in append & read mode ('a+')
     with open("./txt/who_click.txt", "a+") as file_object:
         # Move read cursor to the start of file.
@@ -21,7 +21,7 @@ def who_click(member_name, member_id, button):
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
         name = str(member_name)
         discord_id = str(f"Discord ID: {member_id}")
-        msg = f"{date_time} {discord_id} {name}"
+        msg = f"{date_time} {discord_id} {name} {click_btn}"
         file_object.write("{}".format(msg.strip()))
 
 
