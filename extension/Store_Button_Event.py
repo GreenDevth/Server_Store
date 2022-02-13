@@ -31,6 +31,7 @@ class StoreButtonEventCommand(commands.Cog):
         minus = player_coin - price
 
         if shop == 'Open':
+            print(shop)
             if price < player_coin:
                 await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
                 checkout_order = cash(member.id, price)
