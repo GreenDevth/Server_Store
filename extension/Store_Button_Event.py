@@ -36,7 +36,6 @@ class StoreButtonEventCommand(commands.Cog):
                             'ขออภัยในความไม่สะดวก')
             return
         if store_btn == 'atv_blue':
-            await interaction.respond(content=f'{member.name} clicked.')
             if price < player_coin:
                 await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
                 checkout_order = cash(member.id, price)
