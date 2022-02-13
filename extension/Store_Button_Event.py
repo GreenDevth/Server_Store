@@ -36,22 +36,23 @@ class StoreButtonEventCommand(commands.Cog):
                             'ขออภัยในความไม่สะดวก')
             return
         if store_btn == 'atv_blue':
-            if price < player_coin:
-                await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
-                checkout_order = cash(member.id, price)
-                if checkout_order == 1:
-                    add_to_cart(member.id, member.name, p[3], order_number, store_btn)
-                    queue = check_queue()
-                    order = in_order(member.id)
-                    await interaction.send(f"คำสั่งหมายเลข {order_number} {store_btn} กำลังดำเนินการจัดส่งให้คุณ")
-                    await cmd_channel.send(
-                        f'{member.mention} '
-                        f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
-                    )
-
-                    await run_cmd_channel.send('!checkout {}'.format(order_number))
-
-            await interaction.respond(content='ไม่พบข้อมูล Steam id ของคุณในระบบ หรือยอดเงินในบัญชีของคุณไม่เพียงพอ')
+            await interaction.respond(content=f'{member.name} clicked.')
+            # if price < player_coin:
+            #     await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
+            #     checkout_order = cash(member.id, price)
+            #     if checkout_order == 1:
+            #         add_to_cart(member.id, member.name, p[3], order_number, store_btn)
+            #         queue = check_queue()
+            #         order = in_order(member.id)
+            #         await interaction.send(f"คำสั่งหมายเลข {order_number} {store_btn} กำลังดำเนินการจัดส่งให้คุณ")
+            #         await cmd_channel.send(
+            #             f'{member.mention} '
+            #             f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
+            #         )
+            #
+            #         await run_cmd_channel.send('!checkout {}'.format(order_number))
+            #
+            # await interaction.respond(content='ไม่พบข้อมูล Steam id ของคุณในระบบ หรือยอดเงินในบัญชีของคุณไม่เพียงพอ')
         # if store_btn == 'atv_blue' and check_player == 1:
         #     if newbie == 0:
         #         await interaction.respond(content=f'ยินดีด้วยคุณได้ซื้อสินค้าในราคาพิเศษ {order_number} '
