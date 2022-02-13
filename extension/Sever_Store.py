@@ -60,18 +60,18 @@ class ServerStore(commands.Cog):
                     content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
                             'ขออภัยในความไม่สะดวก')
             check = daily_status(member.id)
-            if check == 1:
-                await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว ')
-            add_to_cart(member.id, member.name, player[3], order_number, server_btn)
-            queue = check_queue()
-            order = in_order(member.id)
-            update_daily_pack(member.id)
-            await interaction.respond(content='show dailypack statement to player')
-            await cmd_channel.send(
-                f'{member.mention} '
-                f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}'
-            )
-            await run_cmd_channel.send('!checkout {}'.format(order_number))
+            if shop_open< time and check == 0:
+                add_to_cart(member.id, member.name, player[3], order_number, server_btn)
+                queue = check_queue()
+                order = in_order(member.id)
+                update_daily_pack(member.id)
+                await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
+                await cmd_channel.send(
+                    f'{member.mention} '
+                    f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
+                )
+                await run_cmd_channel.send('!checkout {}'.format(order_number))
+            await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว ')
         if server_btn == 'server':
             await interaction.respond(
                 content=f"```\nServer: {scum_server} "
