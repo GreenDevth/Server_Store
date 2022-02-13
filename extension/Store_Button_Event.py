@@ -33,6 +33,7 @@ class StoreButtonEventCommand(commands.Cog):
             await interaction.respond(
                     content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
                             'ขออภัยในความไม่สะดวก')
+            return
         if store_btn == 'atv_blue':
             if check_player == 1 and price < player_coin:
                 await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
