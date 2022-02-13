@@ -1,5 +1,5 @@
 from discord.ext import commands
-import schedule, time
+
 
 #
 # def read_click_file():
