@@ -4,6 +4,7 @@ import json
 from discord.ext import commands
 from discord_components import Button, ButtonStyle
 from database.battlemetric import battlemetric
+from database.Players import players
 
 token = str(battlemetric(2))
 url = str(battlemetric(3))
@@ -22,20 +23,23 @@ class ServerStore(commands.Cog):
         response = requests.get("https://api.battlemetrics.com/servers/13458708", headers=head)
         res_text = response.text
         json.loads(res_text)
-        jsonObj = response.json()
-        scum_server = jsonObj['data']['attributes']['name']
-        scum_ip = jsonObj['data']['attributes']['ip']
-        scum_port = jsonObj['data']['attributes']['port']
-        scum_player = jsonObj['data']['attributes']['players']
-        scum_player_max = jsonObj['data']['attributes']['maxPlayers']
-        scum_rank = jsonObj['data']['attributes']['rank']
-        scum_status = jsonObj['data']['attributes']['status']
-        scum_time = jsonObj['data']['attributes']['details']['time']
-        scum_version = jsonObj['data']['attributes']['details']['version']
-        print(jsonObj['data']['attributes']['players'])
+        json_obj = response.json()
+        scum_server = json_obj['data']['attributes']['name']
+        scum_ip = json_obj['data']['attributes']['ip']
+        scum_port = json_obj['data']['attributes']['port']
+        scum_player = json_obj['data']['attributes']['players']
+        scum_player_max = json_obj['data']['attributes']['maxPlayers']
+        scum_rank = json_obj['data']['attributes']['rank']
+        scum_status = json_obj['data']['attributes']['status']
+        scum_time = json_obj['data']['attributes']['details']['time']
+        scum_version = json_obj['data']['attributes']['details']['version']
+        player = players(member.id)
+        coin = "${:,d}".format(player[5])
 
         if server_btn == 'bankstatement':
-            await interaction.respond(content='show bank statement to player')
+            await interaction.respond(
+                content=f"```css\nName : '{player[1]}' , Bank ID : {player[4]}, Total : {coin}\n```"
+            )
 
         if server_btn == 'dailypack':
             await interaction.respond(content='show dailypack statement to player')
@@ -55,12 +59,24 @@ class ServerStore(commands.Cog):
             )
 
         if server_btn == 'status':
-            await interaction.respond(content='show status statement to player')
+            def newbie_status():
+                if player[7] == 1:
+                    return 'Disabled'
+                if player[7] == 0:
+                    return 'Enabled'
+            await interaction.respond(
+                content=f'Discord Name : {player[1]} '
+                        f'\nBank ID : {player[4]} '
+                        f'\nCoins : {coin} '
+                        f'\nExp : {player[8]} '
+                        f'\nLevel : {player[6]} '
+                        f'\nNewbie : {newbie_status()}'
+            )
 
     @commands.command(name='selfserve')
     async def selfserve_command(self, ctx):
         await ctx.send(
-            "ปุ่มจัดการธุรกรรมด้วยตนเอง",
+            file=discord.File('./img/line.png'),
             components=[
                 [
                     Button(style=ButtonStyle.gray, label='Bank Statement', emoji='🏦', custom_id='bankstatement'),
