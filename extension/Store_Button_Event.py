@@ -33,7 +33,6 @@ class StoreButtonEventCommand(commands.Cog):
     async def on_button_click(self, interaction):
         cmd_channel = self.bot.get_channel(925559937323659274)
         run_cmd_channel = self.bot.get_channel(927796274676260944)
-        log_channel = self.bot.get_channel(942361402134396979)
         store_btn = interaction.component.custom_id
         member = interaction.author
         check_player = players_exists(member.id)
@@ -44,7 +43,7 @@ class StoreButtonEventCommand(commands.Cog):
         order_number = f'order{code}'
         print(f'{member.name} clicked.')
         who_click(member.name, member.id, store_btn)
-        await log_channel.send(f'```{member.name} is click {store_btn}```')
+        
 
         if shop == 'Close':
             print('Shop is closed.')
