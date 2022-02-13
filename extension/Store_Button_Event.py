@@ -29,10 +29,12 @@ class StoreButtonEventCommand(commands.Cog):
         pack = get_command(store_btn)
         price = get_price(store_btn)
         minus = player_coin - price
-
-        if shop == 'Open':
-            print(shop)
-            if price < player_coin:
+        if shop == 'Close':
+            await interaction.respond(
+                    content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
+                            'ขออภัยในความไม่สะดวก')
+        if store_btn == 'atv_blue':
+            if check_player == 1 and price < player_coin:
                 await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
                 checkout_order = cash(member.id, price)
                 if checkout_order == 1:
@@ -47,9 +49,7 @@ class StoreButtonEventCommand(commands.Cog):
 
                     await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-        await interaction.respond(
-                content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
-                        'ขออภัยในความไม่สะดวก')
+            await interaction.respond(content='ไม่พบข้อมูล Steam id ของคุณในระบบ หรือยอดเงินในบัญชีของคุณไม่เพียงพอ')
         # if store_btn == 'atv_blue' and check_player == 1:
         #     if newbie == 0:
         #         await interaction.respond(content=f'ยินดีด้วยคุณได้ซื้อสินค้าในราคาพิเศษ {order_number} '
