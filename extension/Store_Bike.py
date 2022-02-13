@@ -13,7 +13,7 @@ class StoreBikeCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='bike_black'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='SPECIAL PRICE FOR NEWBIE', emoji='🏷', disabled=True)
                 ]
             ]
         )
@@ -22,7 +22,7 @@ class StoreBikeCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='bike_blue'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='SPECIAL PRICE FOR NEWBIE', emoji='🏷', disabled=True)
                 ]
             ]
         )
@@ -31,7 +31,7 @@ class StoreBikeCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='bike_green'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='SPECIAL PRICE FOR NEWBIE', emoji='🏷', disabled=True)
                 ]
             ]
         )
@@ -40,7 +40,7 @@ class StoreBikeCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='bike_hell'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='SPECIAL PRICE FOR NEWBIE', emoji='🏷', disabled=True)
                 ]
             ]
         )
@@ -49,7 +49,7 @@ class StoreBikeCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='bike_red'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='SPECIAL PRICE FOR NEWBIE', emoji='🏷', disabled=True)
                 ]
             ]
         )
@@ -58,7 +58,7 @@ class StoreBikeCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='bike_white'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='SPECIAL PRICE FOR NEWBIE', emoji='🏷', disabled=True)
                 ]
             ]
         )
@@ -67,7 +67,7 @@ class StoreBikeCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='bike_yellow'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='SPECIAL PRICE FOR NEWBIE', emoji='🏷', disabled=True)
                 ]
             ]
         )

@@ -14,7 +14,7 @@ class StoreCruiserCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='cruiser_black'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='SPECIAL PRICE FOR NEWBIE', emoji='🏷', disabled=True)
                 ]
             ]
         )
@@ -23,7 +23,7 @@ class StoreCruiserCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='cruiser_blue'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='SPECIAL PRICE FOR NEWBIE', emoji='🏷', disabled=True)
                 ]
             ]
         )
@@ -32,7 +32,7 @@ class StoreCruiserCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='cruiser_green'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='SPECIAL PRICE FOR NEWBIE', emoji='🏷', disabled=True)
                 ]
             ]
         )
@@ -41,7 +41,7 @@ class StoreCruiserCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='cruiser_red'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='SPECIAL PRICE FOR NEWBIE', emoji='🏷', disabled=True)
                 ]
             ]
         )
@@ -50,7 +50,7 @@ class StoreCruiserCommand(commands.Cog):
             components=[
                 [
                     Button(style=ButtonStyle.green, label='PURCHASE NOW', emoji='💵', custom_id='cruiser_violet'),
-                    Button(style=ButtonStyle.gray, label='FIRST PURCHASE CLICK', emoji='🏷', custom_id='new_player'),
+                    Button(style=ButtonStyle.gray, label='SPECIAL PRICE FOR NEWBIE', emoji='🏷', disabled=True)
                 ]
             ]
         )
