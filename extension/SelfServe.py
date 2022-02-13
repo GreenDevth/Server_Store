@@ -63,7 +63,8 @@ class ServerStore(commands.Cog):
                         f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
                     )
                     await run_cmd_channel.send('!checkout {}'.format(order_number))
-                await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว ')
+                if shop_open < time and check == 1:
+                    await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว ')
         if server_btn == 'server':
             response = requests.get("https://api.battlemetrics.com/servers/13458708", headers=head)
             res_text = response.text
