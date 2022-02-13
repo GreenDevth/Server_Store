@@ -1,11 +1,13 @@
 import discord
 import requests
 import json
+import random
 from datetime import datetime
 from discord.ext import commands
 from discord_components import Button, ButtonStyle
 from database.battlemetric import battlemetric
-from database.Players import players
+from database.Players import players, daily_status, update_daily_pack
+from database.Store import *
 
 token = str(battlemetric(2))
 url = str(battlemetric(3))
@@ -19,6 +21,8 @@ class ServerStore(commands.Cog):
 
     @commands.Cog.listener()
     async def on_button_click(self, interaction):
+        cmd_channel = self.bot.get_channel(925559937323659274)
+        run_cmd_channel = self.bot.get_channel(927796274676260944)
         member = interaction.author
         server_btn = interaction.component.custom_id
         response = requests.get("https://api.battlemetrics.com/servers/13458708", headers=head)
@@ -49,12 +53,25 @@ class ServerStore(commands.Cog):
             )
 
         if server_btn == 'dailypack':
+            code = random.randint(9, 999999)
+            order_number = f'order{code}'
             if time < shop_open:
                 await interaction.respond(
                     content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
                             'ขออภัยในความไม่สะดวก')
+            check = daily_status(member.id)
+            if check == 1:
+                await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว ')
+            add_to_cart(member.id, member.name, player[3], order_number, server_btn)
+            queue = check_queue()
+            order = in_order(member.id)
+            update_daily_pack(member.id)
             await interaction.respond(content='show dailypack statement to player')
-
+            await cmd_channel.send(
+                f'{member.mention} '
+                f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}'
+            )
+            await run_cmd_channel.send('!checkout {}'.format(order_number))
         if server_btn == 'server':
             await interaction.respond(
                 content=f"```\nServer: {scum_server} "
@@ -71,16 +88,16 @@ class ServerStore(commands.Cog):
         if server_btn == 'status':
             def newbie_status():
                 if player[7] == 1:
-                    return 'Disabled'
+                    return 'Already used.'
                 if player[7] == 0:
-                    return 'Enabled'
+                    return 'Has been used.'
             await interaction.respond(
                 content=f'Discord Name : {player[1]} '
                         f'\nBank ID : {player[4]} '
                         f'\nCoins : {coin} '
                         f'\nExp : {player[8]} '
                         f'\nLevel : {player[6]} '
-                        f'\nNewbie : {newbie_status()}'
+                        f'\nVehicle Specail Price : {newbie_status()}'
             )
 
     @commands.command(name='selfserve')
