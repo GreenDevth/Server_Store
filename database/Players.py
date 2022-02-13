@@ -83,3 +83,17 @@ def update_daily_pack(discord_id):
         cur.close()
     except Error as e:
         print(e)
+
+
+def players_coin(discord_id):
+    try:
+        conn = MySQLConnection(**db)
+        cur = conn.cursor()
+        sql = 'SELECT COINS FROM scum_players WHERE DISCORD_ID=%s'
+        cur.execute(sql, (discord_id,))
+        row = cur.fetchall()
+        while row is not None:
+            res = list(row)
+            return res[0]
+    except Error as e:
+        print(e)

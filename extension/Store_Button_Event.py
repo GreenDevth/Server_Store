@@ -20,15 +20,15 @@ class StoreButtonEventCommand(commands.Cog):
         run_cmd_channel = self.bot.get_channel(927796274676260944)
         store_btn = interaction.component.custom_id
         member = interaction.author
-        p = players(member.id)
-        player_coin = p[5]
-        player_level = p[6]
-        player_exp = p[8]
-        newbie = p[7]
+        # p = players(member.id)
+        # player_coin = p[5]
+        # player_level = p[6]
+        # player_exp = p[8]
+        # newbie = p[7]
         check_player = players_exists(member.id)
-        pack = get_command(store_btn)
+        # pack = get_command(store_btn)
         price = get_price(store_btn)
-        minus = player_coin - price
+        # minus = player_coin - price
         if shop == 'Close':
             print('Shop is closed.')
             await interaction.respond(
@@ -36,20 +36,20 @@ class StoreButtonEventCommand(commands.Cog):
                             'ขออภัยในความไม่สะดวก')
             return
         if store_btn == 'atv_blue':
-            if price < player_coin:
-                await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
-                checkout_order = cash(member.id, price)
-                if checkout_order == 1:
-                    add_to_cart(member.id, member.name, p[3], order_number, store_btn)
-                    queue = check_queue()
-                    order = in_order(member.id)
-                    await interaction.send(f"คำสั่งหมายเลข {order_number} {store_btn} กำลังดำเนินการจัดส่งให้คุณ")
-                    await cmd_channel.send(
-                        f'{member.mention} '
-                        f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
-                    )
+            # if price < player_coin:
+            #     await interaction.respond(content='โปรดรอสักครู่ระบบกำลังตรวจสอบสิทธิ์ในการสั่งซื้อของคุณ')
+            #     checkout_order = cash(member.id, price)
+            #     if checkout_order == 1:
+            #         add_to_cart(member.id, member.name, p[3], order_number, store_btn)
+            #         queue = check_queue()
+            #         order = in_order(member.id)
+            #         await interaction.send(f"คำสั่งหมายเลข {order_number} {store_btn} กำลังดำเนินการจัดส่งให้คุณ")
+            #         await cmd_channel.send(
+            #             f'{member.mention} '
+            #             f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
+            #         )
 
-                    await run_cmd_channel.send('!checkout {}'.format(order_number))
+            #         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
             await interaction.respond(content='หรือยอดเงินในบัญชีของคุณไม่เพียงพอ')
         # if store_btn == 'atv_blue' and check_player == 1:
