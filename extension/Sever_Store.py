@@ -1,6 +1,7 @@
 import discord
 import requests
 import json
+from datetime import datetime
 from discord.ext import commands
 from discord_components import Button, ButtonStyle
 from database.battlemetric import battlemetric
@@ -35,7 +36,11 @@ class ServerStore(commands.Cog):
         scum_version = json_obj['data']['attributes']['details']['version']
         player = players(member.id)
         coin = "${:,d}".format(player[5])
-
+        # current dateTime
+        now = datetime.now()
+        time = now.strftime("%H:%M:%S")
+        print(time)
+        shop_open = "18:00:00"
         if server_btn == 'bankstatement':
             await interaction.respond(
                 content=f"Name : '{player[1]}' "
@@ -44,6 +49,10 @@ class ServerStore(commands.Cog):
             )
 
         if server_btn == 'dailypack':
+            if time < shop_open:
+                await interaction.respond(
+                    content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
+                            'ขออภัยในความไม่สะดวก')
             await interaction.respond(content='show dailypack statement to player')
 
         if server_btn == 'server':
