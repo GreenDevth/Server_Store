@@ -1,8 +1,7 @@
 import random
 from discord.ext import commands
 from database.Store import shop_is_open, get_price, newbie_get_price, add_to_cart, check_queue, in_order
-from database.Players import players_exists, players, players_update_coin
-
+from database.Players import players_exists, players, players_update_coin, players_newbie_update
 
 shop = shop_is_open("18:00:00")
 
@@ -30,7 +29,7 @@ class StoreButtonEventCommand(commands.Cog):
                         'ขออภัยในความไม่สะดวก')
 
         """ Command Event For ATV """
-                        
+
         if store_btn == 'atv_blue':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -45,6 +44,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -54,18 +54,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
-                        
+
         if store_btn == 'atv_camo':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -80,6 +80,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -89,18 +90,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
-                        
+
         if store_btn == 'atv_red':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -115,6 +116,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -124,18 +126,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
-                        
+
         if store_btn == 'atv_yellow':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -150,6 +152,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -159,13 +162,12 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -174,7 +176,7 @@ class StoreButtonEventCommand(commands.Cog):
         """ End Command Event For ATV """
 
         """ Start command for pickup """
-        
+
         if store_btn == 'pickup_black':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -189,6 +191,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -198,18 +201,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
-        
+
         if store_btn == 'pickup_hell':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -224,6 +227,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -233,18 +237,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
-        
+
         if store_btn == 'pickup_camo':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -259,6 +263,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -268,18 +273,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
-        
+
         if store_btn == 'pickup_blue':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -294,6 +299,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -303,18 +309,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
-        
+
         if store_btn == 'pickup_red_white':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -329,6 +335,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -338,18 +345,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
-        
+
         if store_btn == 'pickup_white':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -364,6 +371,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -373,18 +381,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
-        
+
         if store_btn == 'pickup_red':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -399,6 +407,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -408,18 +417,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
-        
+
         if store_btn == 'pickup_orange':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -434,6 +443,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -443,13 +453,13 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -457,10 +467,8 @@ class StoreButtonEventCommand(commands.Cog):
 
         """ End command for pickup """
 
-
         """ Start command for suv """
 
-             
         if store_btn == 'suv_orange':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -475,6 +483,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -484,19 +493,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-             
         if store_btn == 'suv_blue':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -511,6 +519,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -520,19 +529,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-             
         if store_btn == 'suv_black':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -547,6 +555,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -556,19 +565,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-             
         if store_btn == 'suv_police_two':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -583,6 +591,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -592,24 +601,22 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-
         """ End command for suv """
 
-
         """ Start command for cruiser bike """
-   
+
         if store_btn == 'cruiser_black':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -624,6 +631,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -633,19 +641,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+                        
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-   
         if store_btn == 'cruiser_red':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -660,6 +667,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -669,19 +677,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+                        
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-   
         if store_btn == 'cruiser_green':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -696,6 +703,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -705,19 +713,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+                        
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-   
         if store_btn == 'cruiser_blue':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -732,6 +739,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -741,19 +749,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+                        
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-   
         if store_btn == 'cruiser_violet':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -768,6 +775,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -777,18 +785,17 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+                        
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
-
 
         """ End command for cruiser bike """
 
@@ -808,6 +815,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -817,19 +825,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+                        
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-   
         if store_btn == 'bike_hell':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -844,6 +851,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -853,19 +861,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+                        
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-   
         if store_btn == 'bike_yellow':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -880,6 +887,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -889,19 +897,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+                        
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-   
         if store_btn == 'bike_white':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -916,6 +923,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -925,19 +933,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+                        
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-   
         if store_btn == 'bike_blue':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -952,6 +959,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -961,19 +969,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+                        
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-   
         if store_btn == 'bike_green':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -988,6 +995,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -997,19 +1005,18 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+                        
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-   
         if store_btn == 'bike_red':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -1024,6 +1031,7 @@ class StoreButtonEventCommand(commands.Cog):
                     add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                     queue = check_queue()
                     order = in_order(member.id)
+                    players_newbie_update(member.id)
                     await cmd_channel.send(f'{member.mention}'
                                            f'```{order_number} กำลังดำเนินจัดส่ง '
                                            f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
@@ -1033,20 +1041,20 @@ class StoreButtonEventCommand(commands.Cog):
                         await interaction.respond(content='ยอดเงินของคุณไม่เพียงพอสำหรับการสั่งซื้อ')
                     else:
                         await interaction.respond(content=f'โปรดรอสักครู่ คำสั่งซื้อหมายเลข '
-                                                          f'{order_number} กำลังดำเนินการจัดส่งให้คุณ')
+                                                          f'{order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ')
                         pay = player[5] - price
                         players_update_coin(member.id, pay)
                         add_to_cart(member.id, member.name, player[3], order_number, store_btn)
                         queue = check_queue()
                         order = in_order(member.id)
-                        await interaction.send(f"คำสั่งหมายเลข {order_number} กำลังดำเนินการจัดส่งไปยังตำแหน่งของคุณ")
+                        
                         await cmd_channel.send(f'{member.mention}'
                                                f'```{order_number} กำลังดำเนินจัดส่ง '
                                                f'จากรายการสั่งซื้อทั้งหมด {order}/{queue}```')
                         await run_cmd_channel.send('!checkout {}'.format(order_number))
 
-
         """ End command for  bike """
+
 
 def setup(bot):
     bot.add_cog(StoreButtonEventCommand(bot))
