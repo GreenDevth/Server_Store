@@ -23,8 +23,6 @@ class ServerStore(commands.Cog):
         member = interaction.author
         server_btn = interaction.component.custom_id
         check_player = players_exists(member.id)
-        print(type(check_player))
-        print(check_player)
         shop_open = "18:00:00"
 
         if server_btn == 'bankstatement':
