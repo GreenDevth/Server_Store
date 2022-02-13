@@ -47,24 +47,25 @@ class ServerStore(commands.Cog):
                 code = random.randint(9, 999999)
                 order_number = f'order{code}'
                 time = shop_is_open(shop_open)
+                check = daily_status(member.id)
+                if shop_open < time:
+                    if check == 0:
+                        add_to_cart(member.id, member.name, player[3], order_number, server_btn)
+                        queue = check_queue()
+                        order = in_order(member.id)
+                        update_daily_pack(member.id)
+                        await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
+                        await cmd_channel.send(
+                            f'{member.mention} '
+                            f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
+                        )
+                        await run_cmd_channel.send('!checkout {}'.format(order_number))
+                    await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว ')
                 if time < shop_open:
                     await interaction.respond(
                         content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
                                 'ขออภัยในความไม่สะดวก')
-                check = daily_status(member.id)
-                if shop_open < time and check == 0:
-                    add_to_cart(member.id, member.name, player[3], order_number, server_btn)
-                    queue = check_queue()
-                    order = in_order(member.id)
-                    update_daily_pack(member.id)
-                    await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
-                    await cmd_channel.send(
-                        f'{member.mention} '
-                        f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
-                    )
-                    await run_cmd_channel.send('!checkout {}'.format(order_number))
-                if shop_open < time and check == 1:
-                    await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว ')
+
         if server_btn == 'server':
             response = requests.get("https://api.battlemetrics.com/servers/13458708", headers=head)
             res_text = response.text
