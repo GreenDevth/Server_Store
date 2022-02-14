@@ -135,7 +135,7 @@ def shop_is_open(open_time):
     to_int_shop_open = shop_open.replace(':', '')
     print(to_int_time)
     print(to_int_shop_open)
-
+    print(time < shop_open)
     print(type(time))
     print(type(shop_open))
     if time < shop_open:
