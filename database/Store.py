@@ -131,6 +131,8 @@ def shop_is_open(open_time):
     now = datetime.now()
     time = now.strftime("%H:%M:%S")
     shop_open = open_time
+    print(time)
+    print(shop_open)
     if time < shop_open:
         return 'Close'
     else:
