@@ -133,3 +133,5 @@ def shop_is_open(open_time):
     shop_open = open_time
     if shop_open < time:
         return 1
+    else:
+        return 0

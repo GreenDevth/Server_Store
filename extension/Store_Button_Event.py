@@ -45,7 +45,7 @@ class StoreButtonEventCommand(commands.Cog):
         # who_click(member.name, member.id, store_btn)
 
         if shop != 1:
-            print('Shop is closed.')
+            print(f'Shop is closed. {shop}')
             await interaction.respond(
                 content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
                         'ขออภัยในความไม่สะดวก')
