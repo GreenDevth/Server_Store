@@ -24,7 +24,7 @@ class ServerStore(commands.Cog):
         server_btn = interaction.component.custom_id
         check_player = players_exists(member.id)
         shop_open = "18:00:00"
-
+        time = shop_is_open(shop_open)
         if server_btn == 'bankstatement':
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
@@ -41,31 +41,34 @@ class ServerStore(commands.Cog):
             if check_player == 0:
                 await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
             else:
-                cmd_channel = self.bot.get_channel(925559937323659274)
-                run_cmd_channel = self.bot.get_channel(927796274676260944)
-                player = players(member.id)
-                code = random.randint(9, 999999)
-                order_number = f'order{code}'
-                time = shop_is_open(shop_open)
-                check = daily_status(member.id)
-                if time < shop_open:
-                    await interaction.respond(content=f'{shop_open} น้อยกว่า {time}')
-                    print(shop_open < time)
-                    # if check == 0:
-                    #     await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
-                    #     add_to_cart(member.id, member.name, player[3], order_number, server_btn)
-                    #     queue = check_queue()
-                    #     order = in_order(member.id)
-                    #     update_daily_pack(member.id)
-                    #     await cmd_channel.send(
-                    #         f'{member.mention} '
-                    #         f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
-                    #     )
-                    #     await run_cmd_channel.send('!checkout {}'.format(order_number))
-                    # if check == 1:
-                    #     await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว')
+                if shop_open < time:
+                    await interaction.respond(content='ร้านเปิด')
                 else:
-                    await interaction.respond(content='ตอนนี้ร้านค้าปิดทำการแล้ว โปรดรอร้านเปิดตอนประมาณ 6 โมงเย็น ')
+                    await interaction.respond(content='ร้านปิด')
+                # cmd_channel = self.bot.get_channel(925559937323659274)
+                # run_cmd_channel = self.bot.get_channel(927796274676260944)
+                # player = players(member.id)
+                # code = random.randint(9, 999999)
+                # order_number = f'order{code}'
+                # check = daily_status(member.id)
+                # if time < shop_open:
+                #     await interaction.respond(content=f'{shop_open} น้อยกว่า {time}')
+                #     print(shop_open < time)
+                #     # if check == 0:
+                #     #     await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
+                #     #     add_to_cart(member.id, member.name, player[3], order_number, server_btn)
+                #     #     queue = check_queue()
+                #     #     order = in_order(member.id)
+                #     #     update_daily_pack(member.id)
+                #     #     await cmd_channel.send(
+                #     #         f'{member.mention} '
+                #     #         f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
+                #     #     )
+                #     #     await run_cmd_channel.send('!checkout {}'.format(order_number))
+                #     # if check == 1:
+                #     #     await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว')
+                # else:
+                #     await interaction.respond(content='ตอนนี้ร้านค้าปิดทำการแล้ว โปรดรอร้านเปิดตอนประมาณ 6 โมงเย็น ')
                 # if time < shop_open:
                 #     await interaction.respond(
                 #         content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
