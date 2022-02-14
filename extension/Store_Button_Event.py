@@ -1,11 +1,21 @@
+import json
 import random
+import requests
 from datetime import datetime
+
 from discord.ext import commands
-from database.Store import shop_is_open, get_price, newbie_get_price, add_to_cart, check_queue, in_order
+
+from config.auth import get_token
 from database.Players import players_exists, players, players_update_coin, players_newbie_update, daily_status, \
     update_daily_pack
+from database.Store import shop_is_open, get_price, newbie_get_price, add_to_cart, check_queue, in_order
 
 shop = shop_is_open("18:00:00")
+token = get_token(2)
+url = get_token(3)
+
+auth = f"{token}"
+head = {'Authorization': 'Brarer' + auth}
 
 
 def who_click(member_name, member_id, click_btn):
@@ -44,6 +54,66 @@ class StoreButtonEventCommand(commands.Cog):
         order_number = f'order{code}'
         print(f'{member.name} clicked.')
         who_click(member.name, member.id, store_btn)
+
+        if store_btn == 'bankstatement':
+            if check_player == 0:
+                await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
+            else:
+                player = players(member.id)
+                coin = "${:,d}".format(player[5])
+                await interaction.respond(
+                    content=f"Name : {player[1]} "
+                            f"\nBank ID : {player[4]} "
+                            f"\nTotal : {coin}"
+                )
+
+        if store_btn == 'server':
+            response = requests.get("https://api.battlemetrics.com/servers/13458708", headers=head)
+            res_text = response.text
+            json.loads(res_text)
+            json_obj = response.json()
+            scum_server = json_obj['data']['attributes']['name']
+            scum_ip = json_obj['data']['attributes']['ip']
+            scum_port = json_obj['data']['attributes']['port']
+            scum_player = json_obj['data']['attributes']['players']
+            scum_player_max = json_obj['data']['attributes']['maxPlayers']
+            scum_rank = json_obj['data']['attributes']['rank']
+            scum_status = json_obj['data']['attributes']['status']
+            scum_time = json_obj['data']['attributes']['details']['time']
+            scum_version = json_obj['data']['attributes']['details']['version']
+            await interaction.respond(
+                content=f"```\nServer: {scum_server} "
+                        f"\nIP: {scum_ip}:{scum_port} "
+                        f"\nStatus: {scum_status} "
+                        f"\nTime in Game: {scum_time} "
+                        f"\nPlayers: {scum_player}/{scum_player_max} "
+                        f"\nRanking: #{scum_rank} "
+                        f"\nGame version: {scum_version}\n "
+                        f"\nServer Restarts Every 6 hours "
+                        f"\nDay 3.8 hours, Night 1 hours\n```",
+            )
+
+        if store_btn == 'status':
+            if check_player == 0:
+                await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
+            else:
+                player = players(member.id)
+                coin = "${:,d}".format(player[5])
+
+                def newbie_status():
+                    if player[7] == 1:
+                        return 'Already used.'
+                    if player[7] == 0:
+                        return 'Has been used.'
+
+                await interaction.respond(
+                    content=f'Discord Name : {player[1]} '
+                            f'\nBank ID : {player[4]} '
+                            f'\nCoins : {coin} '
+                            f'\nExp : {player[8]} '
+                            f'\nLevel : {player[6]} '
+                            f'\nVehicle Specail Price : {newbie_status()}'
+                )
 
         if shop != 1:
             print(f'Shop is closed. {shop}')
