@@ -49,19 +49,21 @@ class ServerStore(commands.Cog):
                 time = shop_is_open(shop_open)
                 check = daily_status(member.id)
                 if shop_open < time:
-                    if check == 0:
-                        await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
-                        add_to_cart(member.id, member.name, player[3], order_number, server_btn)
-                        queue = check_queue()
-                        order = in_order(member.id)
-                        update_daily_pack(member.id)
-                        await cmd_channel.send(
-                            f'{member.mention} '
-                            f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
-                        )
-                        await run_cmd_channel.send('!checkout {}'.format(order_number))
-                    if check == 1:
-                        await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว')
+                    await interaction.respond(content=f'{shop_open} น้อยกว่า {time}')
+                    print(shop_open < time)
+                    # if check == 0:
+                    #     await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
+                    #     add_to_cart(member.id, member.name, player[3], order_number, server_btn)
+                    #     queue = check_queue()
+                    #     order = in_order(member.id)
+                    #     update_daily_pack(member.id)
+                    #     await cmd_channel.send(
+                    #         f'{member.mention} '
+                    #         f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
+                    #     )
+                    #     await run_cmd_channel.send('!checkout {}'.format(order_number))
+                    # if check == 1:
+                    #     await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว')
                 else:
                     await interaction.respond(content='ตอนนี้ร้านค้าปิดทำการแล้ว โปรดรอร้านเปิดตอนประมาณ 6 โมงเย็น ')
                 if time < shop_open:
