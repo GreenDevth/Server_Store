@@ -48,7 +48,7 @@ class ServerStore(commands.Cog):
                 order_number = f'order{code}'
                 time = shop_is_open(shop_open)
                 check = daily_status(member.id)
-                if shop_open < time:
+                if time < shop_open:
                     await interaction.respond(content=f'{shop_open} น้อยกว่า {time}')
                     print(shop_open < time)
                     # if check == 0:
@@ -66,10 +66,10 @@ class ServerStore(commands.Cog):
                     #     await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว')
                 else:
                     await interaction.respond(content='ตอนนี้ร้านค้าปิดทำการแล้ว โปรดรอร้านเปิดตอนประมาณ 6 โมงเย็น ')
-                if time < shop_open:
-                    await interaction.respond(
-                        content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
-                                'ขออภัยในความไม่สะดวก')
+                # if time < shop_open:
+                #     await interaction.respond(
+                #         content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
+                #                 'ขออภัยในความไม่สะดวก')
 
         if server_btn == 'server':
             response = requests.get("https://api.battlemetrics.com/servers/13458708", headers=head)
