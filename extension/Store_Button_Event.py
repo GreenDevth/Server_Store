@@ -2,7 +2,8 @@ import random
 from datetime import datetime
 from discord.ext import commands
 from database.Store import shop_is_open, get_price, newbie_get_price, add_to_cart, check_queue, in_order
-from database.Players import players_exists, players, players_update_coin, players_newbie_update
+from database.Players import players_exists, players, players_update_coin, players_newbie_update, daily_status, \
+    update_daily_pack
 
 shop = shop_is_open("18:00:00")
 
@@ -44,12 +45,28 @@ class StoreButtonEventCommand(commands.Cog):
         print(f'{member.name} clicked.')
         # who_click(member.name, member.id, store_btn)
 
-        if shop != 1:
+        if shop == 1:
             print(f'Shop is closed. {shop}')
             await interaction.respond(
                 content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
                         'ขออภัยในความไม่สะดวก')
         else:
+            if store_btn == 'dailypack':
+                check = daily_status(member.id)
+                if check == 0:
+                    player = players(member.id)
+                    await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
+                    add_to_cart(member.id, member.name, player[3], order_number, store_btn)
+                    queue = check_queue()
+                    order = in_order(member.id)
+                    update_daily_pack(member.id)
+                    await cmd_channel.send(
+                        f'{member.mention} '
+                        f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
+                    )
+                    await run_cmd_channel.send('!checkout {}'.format(order_number))
+                if check == 1:
+                    await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว')
 
             """ Command Event For ATV """
 

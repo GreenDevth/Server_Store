@@ -37,14 +37,14 @@ class ServerStore(commands.Cog):
                             f"\nTotal : {coin}"
                 )
 
-        if server_btn == 'dailypack':
-            if check_player == 0:
-                await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
-            else:
-                if shop_open < time:
-                    await interaction.respond(content='ร้านเปิด')
-                else:
-                    await interaction.respond(content='ร้านปิด')
+        # if server_btn == 'dailypack':
+        #     if check_player == 0:
+        #         await interaction.respond(content=f'{member.name} ไม่พบข้อมูล Steam id ของคุณในระบบ')
+        #     else:
+        #         if shop_open < time:
+        #             await interaction.respond(content='ร้านเปิด')
+        #         else:
+        #             await interaction.respond(content='ร้านปิด')
                 # cmd_channel = self.bot.get_channel(925559937323659274)
                 # run_cmd_channel = self.bot.get_channel(927796274676260944)
                 # player = players(member.id)
