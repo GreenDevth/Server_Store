@@ -133,6 +133,9 @@ def shop_is_open(open_time):
     shop_open = open_time
     print(time)
     print(shop_open)
+
+    print(type(time))
+    print(type(shop_open))
     if time < shop_open:
         return 'Close'
     else:
