@@ -131,8 +131,10 @@ def shop_is_open(open_time):
     now = datetime.now()
     time = now.strftime("%H:%M:%S")
     shop_open = open_time
-    print(time)
-    print(shop_open)
+    to_int_time = time.replace(':', '')
+    to_int_shop_open = shop_open.replace(':', '')
+    print(to_int_time)
+    print(to_int_shop_open)
 
     print(type(time))
     print(type(shop_open))
