@@ -1,13 +1,15 @@
 import json
 import random
-import requests
 from datetime import datetime
+
+import requests
 from discord.ext import commands
 from discord_components import Button, ButtonStyle
-from database.Players import players_exists, players, players_update_coin, players_newbie_update, daily_status, \
+
+from config.auth import get_token
+from database.Players import players_exists, players, daily_status, \
     update_daily_pack
 from database.Store import shop_is_open, get_price, newbie_get_price, add_to_cart, check_queue, in_order
-from config.auth import get_token
 
 shop = shop_is_open("18:00:00")
 token = get_token(2)
@@ -34,8 +36,6 @@ class ServerStore(commands.Cog):
         code = random.randint(9, 999999)
         order_number = f'order{code}'
         print(f'{member.name} clicked.')
-
-
 
         if store_btn == 'bankstatement':
             if check_player == 0:
