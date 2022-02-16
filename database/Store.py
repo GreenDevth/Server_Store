@@ -135,3 +135,5 @@ def shop_is_open(open_time):
         return 1
     else:
         return 0
+
+shop_is_open("18:00:00")
