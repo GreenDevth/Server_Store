@@ -101,9 +101,8 @@ class ServerStore(commands.Cog):
             now = datetime.now()
             time = now.strftime("%H:%M:%S")
 
-            print(shop_open < time)
             check = daily_status(member.id)
-            if check == 0:
+            if check == 0 and shop_open <= time:
                 player = players(member.id)
                 await interaction.respond(content='โปรดรอสักครู่ระบบกำลังดำเนินจัดส่งสินค้าให้คุณ')
                 add_to_cart(member.id, member.name, player[3], order_number, store_btn)
@@ -115,8 +114,14 @@ class ServerStore(commands.Cog):
                     f'```คำสั่งซื้อหมายเลข {order_number} กำลังเตรียมการจัดส่งจากทั้งหมด {order}/{queue}```'
                 )
                 await run_cmd_channel.send('!checkout {}'.format(order_number))
-            if check == 1:
+                return
+            elif check == 1:
                 await interaction.respond(content='คุณได้ใช้สิทธิ์ในการรับ Daily Pack สำหรับวันนี้ไปแล้ว')
+                return
+            else:
+                await interaction.respond(
+                    content='ตอนนี้ ร้านค้ายังไม่เปิดทำการ กรุณามาใหม่ในช่วงเวลา 6 โมงเย็น ถึง เที่ยงคืน '
+                            'ขออภัยในความไม่สะดวก')
 
     @commands.command(name='selfserve')
     async def selfserve_command(self, ctx):
